@@ -1,0 +1,6 @@
+*/node_modules
+*/npm-debug.log
+## Some Directory block based on editor and git:
+.idea/
+.git/
+.vscode/
