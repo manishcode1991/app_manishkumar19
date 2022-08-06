@@ -12,7 +12,7 @@ pipeline {
   }
   tools {
     nodejs "nodejs"
-    dockerTool 'Test_Docker'
+    dockerTool 'nagp_docker'
   }
   stages {
     stage('Build') {
