@@ -17,7 +17,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'npm i'
+        sh 'npm --prefix src i'
       }
     }
     stage('Unit Testing') {
