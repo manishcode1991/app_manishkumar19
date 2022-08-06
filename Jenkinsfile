@@ -2,12 +2,12 @@ pipeline {
   agent any
 
   environment {
-    scannerHome = tool 'SonarQubeScanner';
-    dockerPort="${env.BRANCH_NAME == "develop" ? 7300 : 7200}"
-    dockerRegistryUsername="manishsurbo"
-    username="manishkumar19"
+//     scannerHome = tool 'SonarQubeScanner';
+//     dockerPort="${env.BRANCH_NAME == "develop" ? 7300 : 7200}"
+//     dockerRegistryUsername="manishsurbo"
+//     username="manishkumar19"
     branch="develop"
-    full_path_of_image=${dockerRegistryUsername}/i-${username}-${env.BRANCH_NAME}
+//     full_path_of_image=${dockerRegistryUsername}/i-${username}-${env.BRANCH_NAME}
 
   }
   tools {
