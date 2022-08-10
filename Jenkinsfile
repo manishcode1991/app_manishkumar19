@@ -11,7 +11,7 @@ pipeline {
   }
   tools {
     nodejs "nodejs"
-    dockerTool 'nagp_docker'
+    dockerTool 'docker'
   }
   stages {
     stage('Build') {
@@ -39,8 +39,8 @@ pipeline {
 //     }
     stage('Docker Image Creation, Tagging & Push') {
       steps {
-        sh "nagp_docker build -t ${full_path_of_image} --no-cache ."
-        sh "nagp_docker tag ${full_path_of_image} ${full_path_of_image}"
+        sh "docker build -t ${full_path_of_image} --no-cache ."
+        sh "docker tag ${full_path_of_image} ${full_path_of_image}"
         sh "docker push ${full_path_of_image}"
       }
     }
