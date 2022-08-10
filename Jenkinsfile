@@ -44,13 +44,6 @@ pipeline {
         sh "docker push ${full_path_of_image}"
       }
     }
-    stage('Docker Image Creation, Tagging & Push') {
-      steps {
-        sh "docker build -t ${full_path_of_image} --no-cache ."
-        sh "docker tag ${full_path_of_image} ${full_path_of_image}"
-        sh "docker push ${full_path_of_image}"
-      }
-    }
     stage('k8 Deployment') {
       steps {
         sh 'kubectl apply -f k8/first_deployment.yaml'
