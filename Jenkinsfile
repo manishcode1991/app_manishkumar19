@@ -18,7 +18,7 @@ pipeline {
     stage('Build and Push Docker Images1'){
         steps{
             script {
-                docker.withRegistry("", registryCredentialsId) {
+                docker.withRegistry("https://registry.hub.docker.com", registryCredentialsId) {
                     sh "docker push manishsurbo/i-manishkumar19-develop:19"
                 }
             }
