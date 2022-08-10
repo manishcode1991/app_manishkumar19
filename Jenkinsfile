@@ -28,8 +28,8 @@ pipeline {
     stage('Docker Push') {
       agent any
       steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub_account_detail', passwordVariable: '123456789', usernameVariable: 'manishsurbo')]) {
-          sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+        withCredentials([usernamePassword(credentialsId: 'dockerhub_account_detail', passwordVariable: 'dckr_pat_2ZrPT5o8NekbRtZ8IxfrhbUS0Sk', usernameVariable: 'manishsurbo')]) {
+          sh "docker login -u manishsurbo -p dckr_pat_2ZrPT5o8NekbRtZ8IxfrhbUS0Sk"
           sh 'docker push manishsurbo/i-manishkumar19-develop:19'
         }
       }
