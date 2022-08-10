@@ -7,49 +7,51 @@ pipeline {
     build_id="${env.BUILD_ID}"
     branch="${env.BRANCH_NAME}"
     full_path_of_image="manishsurbo/i-manishkumar19-develop:19"
-    registryUrl='https://registry.hub.docker.com'
-    registryCredentialsId='dockerhub_account_detail'
+//     registryUrl='https://registry.hub.docker.com'
+//     registryCredentialsId='dockerhub_account_detail'
   }
   tools {
     nodejs "nodejs"
     dockerTool 'docker'
   }
   stages {
-//     stage('Build and Push Docker Images1'){
-//         steps{
-//             script {
-// //                 sh "docker build -t ${full_path_of_image} --no-cache ."
-//                 dockerTool.withRegistry("https://registry.hub.docker.com", registryCredentialsId) {
-//                     sh "docker push manishsurbo/i-manishkumar19-develop:19"
-//                 }
-//             }
+    stage('Build') {
+      steps {
+        sh 'npm --prefix src i'
+      }
+    }
+    stage('Unit Testing') {
+      when {
+        branch 'master'
+      }
+      steps {
+        sh 'npm --prefix src test'
+      }
+    }
+//     stage('SonarQube Analysis') {
+//       when {
+//         branch 'develop'
+//       }
+//       steps {
+//         withSonarQubeEnv('Test_Sonar') {
+//           sh "${scannerHome}/bin/sonar-scanner"
 //         }
+//       }
 //     }
-    stage('Docker Push') {
+    stage('Docker Image Creation, Tagging & Push') {
       agent any
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerhub_account_detail', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
           sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-          sh 'docker push manishsurbo/i-manishkumar19-develop:19'
+          sh "docker build -t ${full_path_of_image} --no-cache ."
+          sh "docker tag ${full_path_of_image} ${full_path_of_image}"
+          sh 'docker push ${full_path_of_image}'
         }
       }
     }
-//     stage('Docker Image Creation, Tagging & Push') {
-//       agent any
+//     stage('k8 Deployment') {
 //       steps {
-// //         script {
-// //             withDockerRegistry([credentialsId: 'dockerhub_account_detail']) {
-// //                 sh "docker push manishsurbo/i-manishkumar19-develop:19"
-// //             }
-// //         }
-//         script {
-//           withDockerRegistry(credentialsId: 'dockerhub_account_detail',url: 'https://registry-1.docker.io/v2/') {
-//             sh "docker push manishsurbo/i-manishkumar19-develop:19"
-//           }
-//         }
-//         withDockerRegistry(credentialsId: 'dockerhub_account_detail', url: 'https://registry.hub.docker.com') {
-//             sh "docker push manishsurbo/i-manishkumar19-develop:19"
-//         }
+//         sh 'kubectl apply -f k8/first_deployment.yaml'
 //       }
 //     }
   }
