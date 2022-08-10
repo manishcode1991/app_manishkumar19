@@ -26,7 +26,9 @@ pipeline {
           }
         }
         withDockerRegistry(credentialsId: 'dockerhub_account_detail', url: 'https://registry.hub.docker.com') {
-                sh "docker push manishsurbo/i-manishkumar19-develop:19"
+            sh "docker push manishsurbo/i-manishkumar19-develop:19"
         }
+      }
+    }
   }
 }
