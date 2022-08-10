@@ -14,7 +14,7 @@ pipeline {
     nodejs "nodejs"
     dockerTool 'docker'
   }
-//   stages {
+  stages {
 //     stage('Build and Push Docker Images1'){
 //         steps{
 //             script {
