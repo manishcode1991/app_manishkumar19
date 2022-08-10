@@ -51,6 +51,6 @@ pipeline {
 //             sh "docker push manishsurbo/i-manishkumar19-develop:19"
 //         }
 //       }
-    }
+//     }
   }
 }
