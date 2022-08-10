@@ -5,8 +5,8 @@ pipeline {
     scannerHome = tool 'SonarQubeScanner';
     docker_user_name="manishsurbo"
     nagp_user_name="manishkumar19"
-    build_id =${env.BUILD_ID}
-    branch=${env.BRANCH_NAME}
+    build_id="${env.BUILD_ID}"
+    branch="${env.BRANCH_NAME}"
     full_path_of_image="${docker_user_name}/i-${nagp_user_name}-${branch}:${build_id}"
   }
   tools {
