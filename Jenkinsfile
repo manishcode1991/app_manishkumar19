@@ -40,7 +40,7 @@ pipeline {
     stage('Building image NGINX') {
       steps{
         script {
-          dockerImage = docker.build + "$full_path_of_image", " ."
+          dockerImage = docker.build + "${full_path_of_image} ."
         }
       }
     }
