@@ -14,8 +14,8 @@ pipeline {
     build_id="${env.BUILD_ID}"
     branch="${env.BRANCH_NAME}"
     full_path_of_image="manishsurbo/i-manishkumar19-develop:19"
-    registryUrl 'https://registry.hub.docker.com'
-    registryCredentialsId 'dockerhub_account_detail'
+    registryUrl='https://registry.hub.docker.com'
+    registryCredentialsId='dockerhub_account_detail'
     registry = '<my-org>/<my-project>'
     tag_beta = "${currentBuild.displayName}-${env.BRANCH_NAME}"
   }
