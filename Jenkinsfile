@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    scannerHome = tool 'SonarQubeScanner';
+//     scannerHome = tool 'SonarQubeScanner';
     docker_user_name="manishsurbo"
     nagp_user_name="manishkumar19"
     build_id="${env.BUILD_ID}"
@@ -27,16 +27,16 @@ pipeline {
         sh 'npm --prefix src test'
       }
     }
-    stage('SonarQube Analysis') {
-      when {
-        branch 'develop'
-      }
-      steps {
-        withSonarQubeEnv('Test_Sonar') {
-          sh "${scannerHome}/bin/sonar-scanner"
-        }
-      }
-    }
+//     stage('SonarQube Analysis') {
+//       when {
+//         branch 'develop'
+//       }
+//       steps {
+//         withSonarQubeEnv('Test_Sonar') {
+//           sh "${scannerHome}/bin/sonar-scanner"
+//         }
+//       }
+//     }
     stage('Docker Image Creation, Tagging & Push') {
       steps {
         sh "docker build -t ${full_path_of_image} --no-cache ."
