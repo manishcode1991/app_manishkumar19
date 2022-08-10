@@ -16,7 +16,7 @@ pipeline {
     stage('Docker Image Creation, Tagging & Push') {
       steps {
         script {
-            withDockerRegistry([credentialsId: 'dockerhub_account_detail', url: "https://registry.hub.docker.com"]) {
+            withDockerRegistry([credentialsId: 'dockerhub_account_detail']) {
                 sh "docker push manishsurbo/i-manishkumar19-develop:19"
             }
         }
@@ -25,7 +25,7 @@ pipeline {
             sh "docker push manishsurbo/i-manishkumar19-develop:19"
           }
         }
-        withDockerRegistry(credentialsId: 'dockerhub_account_detail', url: 'https://registry.hub.docker.com') {
+        withDockerRegistry(credentialsId: 'dockerhub_account_detail') {
             sh "docker push manishsurbo/i-manishkumar19-develop:19"
         }
       }
