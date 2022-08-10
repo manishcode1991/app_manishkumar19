@@ -41,7 +41,7 @@ pipeline {
       steps {
         sh "docker build -t ${full_path_of_image} --no-cache ."
         sh "docker tag ${full_path_of_image} ${full_path_of_image}"
-        withDockerRegistry(credentialsId: 'dockerhub_account_detail', url: 'https://hub.docker.com/') {
+        withDockerRegistry(credentialsId: 'dockerhub_account_detail', url: 'https://registry.hub.docker.com') {
             sh "docker push ${full_path_of_image}"
         }
       }

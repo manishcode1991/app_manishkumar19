@@ -13,7 +13,7 @@ docker tag i-manishkumar19-develop:latest manishsurbo/i-manishkumar19-develop:la
 docker push manishsurbo/i-manishkumar19-develop:latest
 
 ## Run Docker Container from dev image 
-docker run -d --network host --env-file .env --name nagp-assignment i-manishkumar19-develop:latest
+docker run -d --network host --env-file .env  i-manishkumar19-develop:latest
 
 
 
