@@ -3,7 +3,7 @@ FROM node:16.16.0
 MAINTAINER Nagarro<manish.kumar19@nagarro.com>
 
 #update system
-RUN apt-get update
+RUN apt-get --allow-releaseinfo-change update
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -13,7 +13,7 @@ WORKDIR /usr/src/app
 COPY src/package*.json ./
 
 # Install app dependencies
-RUN npm install --only=production
+RUN npm install
 
 # Bundle app source
 COPY src/ .

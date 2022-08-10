@@ -2,13 +2,11 @@ pipeline {
   agent any
 
   environment {
-//     scannerHome = tool 'SonarQubeScanner';
-//     dockerPort="${env.BRANCH_NAME == "develop" ? 7300 : 7200}"
-//     dockerRegistryUsername="manishsurbo"
-//     username="manishkumar19"
+    scannerHome = tool 'SonarQubeScanner';
     branch="develop"
-//     full_path_of_image=${dockerRegistryUsername}/i-${username}-${env.BRANCH_NAME}
-
+    docker_user_name="manishsurbo"
+    nagp_user_name="manishkumar19"
+    full_path_of_image=${docker_user_name}/i-${nagp_user_name}-${env.BRANCH_NAME}:latest
   }
   tools {
     nodejs "nodejs"
@@ -25,7 +23,7 @@ pipeline {
         branch 'master'
       }
       steps {
-        sh 'npm test'
+        sh 'npm --prefix src test'
       }
     }
     stage('SonarQube Analysis') {
@@ -38,6 +36,12 @@ pipeline {
         }
       }
     }
-   
+    stage('Docker Image Creation, Tagging & Push') {
+      steps {
+        sh "docker build -t ${full_path_of_image} --no-cache ."
+        sh "docker tag ${full_path_of_image} ${full_path_of_image}"
+        sh "docker push ${full_path_of_image}"
+      }
+    }
   }
 }
