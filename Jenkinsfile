@@ -35,6 +35,7 @@ pipeline {
 //       }
 //     }
     stage('Docker Image Creation, Tagging & Push') {
+      agent any
       steps {
 //         script {
 //             withDockerRegistry([credentialsId: 'dockerhub_account_detail']) {
