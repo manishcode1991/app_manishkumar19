@@ -18,6 +18,7 @@ pipeline {
     stage('Build and Push Docker Images1'){
         steps{
             script {
+                sh "docker build -t ${full_path_of_image} --no-cache ."
                 docker.withRegistry("https://registry.hub.docker.com", registryCredentialsId) {
                     sh "docker push manishsurbo/i-manishkumar19-develop:19"
                 }
