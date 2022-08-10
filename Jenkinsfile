@@ -25,31 +25,31 @@ pipeline {
 //             }
 //         }
 //     }
-    stage('Docker Push') {
-      agent any
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub_account_detail', passwordVariable: 'dckr_pat_2ZrPT5o8NekbRtZ8IxfrhbUS0Sk', usernameVariable: 'manishsurbo')]) {
-          sh "docker login -u manishsurbo -p dckr_pat_2ZrPT5o8NekbRtZ8IxfrhbUS0Sk"
-          sh 'docker push manishsurbo/i-manishkumar19-develop:19'
-        }
-      }
-    }
-//     stage('Docker Image Creation, Tagging & Push') {
+//     stage('Docker Push') {
+//       agent any
 //       steps {
+//         withCredentials([usernamePassword(credentialsId: 'dockerhub_account_detail', passwordVariable: 'dckr_pat_2ZrPT5o8NekbRtZ8IxfrhbUS0Sk', usernameVariable: 'manishsurbo')]) {
+//           sh "docker login -u manishsurbo -p dckr_pat_2ZrPT5o8NekbRtZ8IxfrhbUS0Sk"
+//           sh 'docker push manishsurbo/i-manishkumar19-develop:19'
+//         }
+//       }
+//     }
+    stage('Docker Image Creation, Tagging & Push') {
+      steps {
 //         script {
 //             withDockerRegistry([credentialsId: 'dockerhub_account_detail']) {
 //                 sh "docker push manishsurbo/i-manishkumar19-develop:19"
 //             }
 //         }
-//         script {
-//           withDockerRegistry(credentialsId: 'dockerhub_account_detail',url: 'https://registry.hub.docker.com') {
-//             sh "docker push manishsurbo/i-manishkumar19-develop:19"
-//           }
-//         }
+        script {
+          withDockerRegistry(credentialsId: 'dockerhub_account_detail',url: 'https://registry-1.docker.io/v2/') {
+            sh "docker push manishsurbo/i-manishkumar19-develop:19"
+          }
+        }
 //         withDockerRegistry(credentialsId: 'dockerhub_account_detail', url: 'https://registry.hub.docker.com') {
 //             sh "docker push manishsurbo/i-manishkumar19-develop:19"
 //         }
-//       }
-//     }
+      }
+    }
   }
 }
