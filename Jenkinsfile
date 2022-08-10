@@ -21,11 +21,11 @@ pipeline {
             }
         }
         script {
-          withDockerRegistry(credentialsId: 'dockerhub_account_detail') {
+          withDockerRegistry(credentialsId: 'dockerhub_account_detail',url: 'https://registry.hub.docker.com') {
             sh "docker push manishsurbo/i-manishkumar19-develop:19"
           }
         }
-        withDockerRegistry(credentialsId: 'dockerhub_account_detail') {
+        withDockerRegistry(credentialsId: 'dockerhub_account_detail', url: 'https://registry.hub.docker.com') {
             sh "docker push manishsurbo/i-manishkumar19-develop:19"
         }
       }
