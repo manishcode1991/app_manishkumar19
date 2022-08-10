@@ -65,11 +65,11 @@ pipeline {
             withDockerRegistry(credentialsId: 'dockerhub_account_detail', url: 'https://registry.hub.docker.com') {
 //             echo "Hi i am inside"
 // //             sh "docker login --password=123456789 --username=${docker_user_name} https://registry.hub.docker.com"
-            sh "docker push manishsurbo/i-manishkumar19-develop:19"
+                    sh "docker push manishsurbo/i-manishkumar19-develop:19"
 //                 dockerImage.push()
             }
 
-      }
+
     }
     stage('k8 Deployment') {
       steps {
