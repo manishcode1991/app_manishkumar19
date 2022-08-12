@@ -6,7 +6,8 @@ pipeline {
     nagp_user_name="manishkumar19"
     build_id="${env.BUILD_ID}"
     branch="${env.BRANCH_NAME}"
-    full_path_of_image="manishsurbo/i-manishkumar19-develop:19"
+    full_path_of_image="${docker_user_name}/i-${nagp_user_name}-${branch}:${build_id}"
+    full_path_of_image_with_latest_tag="${docker_user_name}/i-${nagp_user_name}-${branch}:latest"
     scannerHome = tool 'SonarQubeScanner';
   }
   tools {
@@ -45,6 +46,7 @@ pipeline {
           sh "docker build -t ${full_path_of_image} --no-cache ."
           sh "docker tag ${full_path_of_image} ${full_path_of_image}"
           sh 'docker push ${full_path_of_image}'
+          sh 'docker push ${full_path_of_image_with_latest_tag}'
         }
       }
     }
