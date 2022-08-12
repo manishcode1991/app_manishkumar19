@@ -27,18 +27,18 @@ pipeline {
         sh 'npm --prefix src test'
       }
     }
-    stage('SonarQube Analysis') {
-      when {
-        branch 'develop'
-      }
-      steps {
-        withSonarQubeEnv('Test_Sonar') {
-          sh "echo ${scannerHome}"
-          echo scannerHome
-          sh "${scannerHome}/bin/sonar-scanner"
-        }
-      }
-    }
+//     stage('SonarQube Analysis') {
+//       when {
+//         branch 'develop'
+//       }
+//       steps {
+//         withSonarQubeEnv('Test_Sonar') {
+//           sh "echo ${scannerHome}"
+//           echo scannerHome
+//           sh "${scannerHome}/bin/sonar-scanner"
+//         }
+//       }
+//     }
     stage('Docker Image Creation, Tagging & Push') {
       agent any
       steps {
