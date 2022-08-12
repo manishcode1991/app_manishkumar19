@@ -45,6 +45,7 @@ pipeline {
           sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
           sh "docker build -t ${full_path_of_image} --no-cache ."
           sh "docker tag ${full_path_of_image} ${full_path_of_image}"
+          sh "docker tag ${full_path_of_image} ${full_path_of_image_with_latest_tag}"
           sh 'docker push ${full_path_of_image}'
           sh 'docker push ${full_path_of_image_with_latest_tag}'
         }
