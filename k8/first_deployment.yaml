@@ -1,4 +1,10 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: kubernetes-cluster-manishkumar19
+---
+
+apiVersion: v1
 kind : ConfigMap
 metadata:
   name: first-configmap
@@ -8,6 +14,16 @@ metadata:
 data:
   node_env: PRODUCTION
   port: '7100'
+---
+# We will create secret with help of command on production ENV
+apiVersion: v1
+kind : Secret
+metadata:
+  name: first-secret
+data:
+  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJyZWdpc3RyeS5naXRsYWIuY29tIjogewoJCQkiYXV0aCI6ICJiV0Z1YVhOb0xtdDFiV0Z5TVRsQWJtRm5ZWEp5Ynk1amIyMDZTMlZsY21GME16SXhJMEFoIgoJCX0KCX0KfQ==
+type: kubernetes.io/dockerconfigjson
+
 ---
 
 apiVersion: apps/v1
