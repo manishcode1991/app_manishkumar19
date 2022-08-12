@@ -7,8 +7,7 @@ pipeline {
     build_id="${env.BUILD_ID}"
     branch="${env.BRANCH_NAME}"
     full_path_of_image="manishsurbo/i-manishkumar19-develop:19"
-//     registryUrl='https://registry.hub.docker.com'
-//     registryCredentialsId='dockerhub_account_detail'
+    scannerHome = tool 'SonarQubeScanner';
   }
   tools {
     nodejs "nodejs"
@@ -28,16 +27,16 @@ pipeline {
         sh 'npm --prefix src test'
       }
     }
-//     stage('SonarQube Analysis') {
-//       when {
-//         branch 'develop'
-//       }
-//       steps {
-//         withSonarQubeEnv('Test_Sonar') {
-//           sh "${scannerHome}/bin/sonar-scanner"
-//         }
-//       }
-//     }
+    stage('SonarQube Analysis') {
+      when {
+        branch 'develop'
+      }
+      steps {
+        withSonarQubeEnv('Test_Sonar') {
+          sh "${scannerHome}/bin/sonar-scanner"
+        }
+      }
+    }
     stage('Docker Image Creation, Tagging & Push') {
       agent any
       steps {
@@ -49,10 +48,10 @@ pipeline {
         }
       }
     }
-//     stage('k8 Deployment') {
-//       steps {
-//         sh 'kubectl apply -f k8/first_deployment.yaml'
-//       }
-//     }
+    stage('k8 Deployment') {
+      steps {
+        sh 'kubectl apply -f k8/first_deployment.yaml'
+      }
+    }
   }
 }

@@ -2,11 +2,12 @@ apiVersion: v1
 kind : ConfigMap
 metadata:
   name: first-configmap
+  namespace: kubernetes-cluster-manishkumar19
   labels:
      app: myapp
 data:
-  NODE_ENV=PRODUCTION
-  PORT=7100
+  node_env: PRODUCTION
+  port: '7100'
 ---
 
 apiVersion: apps/v1
@@ -31,7 +32,7 @@ spec:
         app: myapp
     spec:
       containers:
-        - image: manishsurbo/i-manishkumar19-master:latest
+        - image: manishsurbo/i-manishkumar19-develop:19
           name: first-app
           ports:
             - containerPort: 7100
@@ -52,9 +53,9 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - targetPort: 80
+    - targetPort: 7100
       port: 7100  # service port
-      nodePort: 30008
+      nodePort: 30010
   selector:
     app: myapp
 
