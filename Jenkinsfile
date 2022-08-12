@@ -20,9 +20,9 @@ pipeline {
       }
     }
     stage('Unit Testing') {
-      when {
-        branch 'master'
-      }
+//       when {
+//         branch 'master'
+//       }
       steps {
         sh 'npm --prefix src test'
       }
@@ -52,7 +52,7 @@ pipeline {
     }
     stage('k8 Deployment') {
       steps {
-        sh 'kubectl apply -f k8/first_deployment.yaml'
+        sh '/var/jenkins_home/gcloud_login/google-cloud-sdk/bin/kubectl apply -f k8/first_deployment.yaml'
       }
     }
   }
