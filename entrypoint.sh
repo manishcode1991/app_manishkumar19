@@ -9,6 +9,6 @@ echo ${CURRENT_ENV}
 if [[ ${CURRENT_ENV} == ${DEFAULT_VALUE} ]]; then
   npm start
 else
-  npm start-prod
+  npm run start-prod
 fi
 exec $@

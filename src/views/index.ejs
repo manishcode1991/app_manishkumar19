@@ -5,8 +5,17 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to NAGP 2022. This is dummy application os Node JS.</p>
+    <h2>Welcome to NAGP 2022. This is dummy application of Node JS.</h2>
+    <br>
+    <br>
+    <h3> Below Two property read from Config Map as ENV </h3>
+    <p>Port: <b><%= JSON.stringify(env.PORT) %></b>.<p>
+    <p>Environment: <b><%= JSON.stringify(env.NODE_ENV) %></b>.<p>
+    <br>
+    <br>
+    <h3> Below Two property read from secret as ENV </h3>
+    <p>Username: <b><%= JSON.stringify(env.secret_username) %></b><p>
+    <p>Password: <b><%= JSON.stringify(env.secret_password) %></b><p>
   </body>
   <script>
     console.table(<%- JSON.stringify(env) %>)

@@ -15,6 +15,9 @@ COPY src/package.json ./
 # Install app dependencies
 RUN npm install
 
+# we need PM2 tool for production and we need to install globally
+RUN npm install --location=global pm2
+
 # Bundle app source
 COPY src/ .
 

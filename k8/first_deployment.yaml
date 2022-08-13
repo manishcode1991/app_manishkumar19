@@ -12,7 +12,7 @@ metadata:
   labels:
      app: myapp
 data:
-  node_env: PRODUCTION
+  node_env: 'PRODUCTION'
   port: '7100'
 ---
 # We will create secret with help of command on production ENV
@@ -21,8 +21,9 @@ kind : Secret
 metadata:
   name: first-secret
 data:
-  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJyZWdpc3RyeS5naXRsYWIuY29tIjogewoJCQkiYXV0aCI6ICJiV0Z1YVhOb0xtdDFiV0Z5TVRsQWJtRm5ZWEp5Ynk1amIyMDZTMlZsY21GME16SXhJMEFoIgoJCX0KCX0KfQ==
-type: kubernetes.io/dockerconfigjson
+  secret_username: YWRtaW4= # admin
+  secret_password: MTIzNDU2 # 12345
+type: Opaque
 
 ---
 
@@ -48,13 +49,25 @@ spec:
         app: myapp
     spec:
       containers:
-        - image: manishsurbo/i-manishkumar19-develop:19
+        - image: manishsurbo/i-manishkumar19-master:latest
           name: first-app
           ports:
             - containerPort: 7100
-#          envFrom:
-#            - configMapRef:
-#              name: app-settings
+          env:
+            # Define the environment variable
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: first-configmap
+                  key: node_env
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: first-configmap
+                  key: port
+          envFrom:
+            - secretRef:
+                name: first-secret
   replicas: 4
   selector:
     matchLabels:

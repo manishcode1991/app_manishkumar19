@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "start-prod": "pm2 ./bin/www",
+    "start-prod": "pm2-runtime start ./bin/www",
     "test": "./node_modules/nyc/bin/nyc.js --reporter=html --reporter=lcov --reporter=text-lcov --reporter=text mocha  ./tests/* --exit"
   },
   "dependencies": {
@@ -13,12 +13,12 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "pm2": "^5.2.0"
   },
   "devDependencies": {
     "mocha": "^9.0.2",
     "nyc": "^15.1.0",
-    "pm2": "^5.2.0",
     "supertest": "~4.0.2"
   }
 }
