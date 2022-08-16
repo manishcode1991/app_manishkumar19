@@ -54,7 +54,7 @@ pipeline {
     stage('k8 Deployment') {
       steps {
 	script {
-            if ($branch == "develop") {
+            if (env.BRANCH_NAME == "develop") {
                sh 'sed  -i -e s/PRODUCTION/DEV/g -e s/master/$branch/g  k8/first_deployment.yaml'
             }
         }
