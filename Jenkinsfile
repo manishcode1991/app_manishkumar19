@@ -1,6 +1,5 @@
 pipeline {
   agent any
-
   environment {
     docker_user_name = "manishsurbo"
     nagp_user_name = "manishkumar19"
@@ -39,41 +38,28 @@ pipeline {
         }
       }
     }
-    //** By default this step get ignored but we can change env variable to 'true' if want to push latest image
-    stage("Docker Image Creation, Tagging & Push") {
+    // THis stage is skipped by default but there is ont ENV variable and one docker creditial step with help of that you can
+    // Activate that stage.
+    stage('Docker Image Creation, Tagging & Push') {
       when {
-        environment name: 'build_publish_docker_image', value: 'true'
+         environment name: 'build_publish_docker_image', value: 'true'
       }
-      agent any
       steps {
-        script {
-          docker.withRegistry('https://index.docker.io/v1/', 'dockerhub_account_detail') {
-            def dockerImage = docker.build($ {
-              full_path_of_image
-            })
-            dockerImage.push("latest")
-          }
+        withCredentials([usernamePassword(credentialsId: 'dockerhub_account_detail', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+          sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+          sh "docker build -t ${full_path_of_image} --no-cache ."
+          sh "docker tag ${full_path_of_image} ${full_path_of_image}"
+          sh "docker tag ${full_path_of_image} ${full_path_of_image_with_latest_tag}"
+          sh 'docker push ${full_path_of_image}'
+          sh 'docker push ${full_path_of_image_with_latest_tag}'
         }
       }
     }
-    //     stage('Docker Image Creation, Tagging & Push') {
-    //       agent any
-    //       steps {
-    //         withCredentials([usernamePassword(credentialsId: 'dockerhub_account_detail', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-    //           sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-    //           sh "docker build -t ${full_path_of_image} --no-cache ."
-    //           sh "docker tag ${full_path_of_image} ${full_path_of_image}"
-    //           sh "docker tag ${full_path_of_image} ${full_path_of_image_with_latest_tag}"
-    //           sh 'docker push ${full_path_of_image}'
-    //           sh 'docker push ${full_path_of_image_with_latest_tag}'
-    //         }
-    //       }
-    //     }
     stage('k8 Deployment') {
       steps {
         script {
-          // 	    I am replacing Image name and One value of ENV variable in jenkins workspace file and it will execute only for develop branch
-          // 	    for that I am using sed command
+          // I am replacing Image name and One value of ENV variable in jenkins workspace file and it will execute only for develop branch
+          // for that I am using sed command
           if (env.BRANCH_NAME == "develop") {
             sh 'sed  -i -e s/PRODUCTION/DEV/g -e s/master/$branch/g  k8/first_deployment.yaml'
           }
