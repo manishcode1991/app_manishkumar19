@@ -83,9 +83,9 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - targetPort: 7100
+    - protocol: TCP
+      targetPort: 7100
       port: 7100  # service port
-      nodePort: 30010
   selector:
     app: myapp
 
