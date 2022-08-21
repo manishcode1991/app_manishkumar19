@@ -1,14 +1,8 @@
 pipeline {
   agent any
   environment {
-    docker_user_name = "manishsurbo"
-    nagp_user_name = "manishkumar19"
-    build_id = "${env.BUILD_ID}"
     branch = "${env.BRANCH_NAME}"
-    full_path_of_image = "${docker_user_name}/i-${nagp_user_name}-${branch}:${build_id}"
-    full_path_of_image_with_latest_tag = "${docker_user_name}/i-${nagp_user_name}-${branch}:latest"
     scannerHome = tool 'SonarQubeScanner';
-    build_publish_docker_image = 'true'
   }
   tools {
     nodejs "nodejs"
@@ -35,23 +29,6 @@ pipeline {
       steps {
         withSonarQubeEnv('Test_Sonar') {
           sh "${scannerHome}/bin/sonar-scanner"
-        }
-      }
-    }
-    // THis stage is skipped by default but there is ont ENV variable and one docker creditial step with help of that you can
-    // Activate that stage.
-    stage('Docker Image Creation, Tagging & Push') {
-      when {
-         environment name: 'build_publish_docker_image', value: 'true'
-      }
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub_account_detail', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
-          sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
-          sh "docker build -t ${full_path_of_image} --no-cache ."
-          sh "docker tag ${full_path_of_image} ${full_path_of_image}"
-          sh "docker tag ${full_path_of_image} ${full_path_of_image_with_latest_tag}"
-          sh 'docker push ${full_path_of_image}'
-          sh 'docker push ${full_path_of_image_with_latest_tag}'
         }
       }
     }
