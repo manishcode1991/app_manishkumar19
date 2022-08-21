@@ -24,7 +24,6 @@ metadata:
 data:
   secret_username: YWRtaW4= # admin
   secret_password: MTIzNDU2 # 12345
-  name: MTIzNDU2
 type: Opaque
 
 ---
