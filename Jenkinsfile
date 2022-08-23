@@ -34,7 +34,7 @@ pipeline {
         withSonarQubeEnv('Test_Sonar') {
           echo "=====SonarQube Analysis Stage Start Here===="
           sh "${scannerHome}/bin/sonar-scanner"
-          echo "=====Unit Testing Stage Ending Here===="
+          echo "=====SonarQube Analysis Stage Ending Here===="
         }
       }
     }
